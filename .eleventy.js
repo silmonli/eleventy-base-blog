@@ -33,9 +33,16 @@ module.exports = function(eleventyConfig) {
     return array.slice(0, n);
   });
 
-  eleventyConfig.addCollection('rss', function(collection) {
-  return [...collection.getFilteredByGlob(`./posts/*.md`), ...collection.getFilteredByGlob(`./weeknotes/*.md`)].reverse();
-});
+//  eleventyConfig.addCollection('rss', function(collection) {
+//  return [...collection.getFilteredByGlob(`./posts/*.md`), ...collection.getFilteredByGlob(`./weeknotes/*.md`)].reverse();
+//});
+
+eleventyConfig.addCollection("weeknotes",
+  collection => collection
+    .getAllSorted()
+    .filter(item => item.url
+                 && ! item.inputPath.includes('index.njk')
+                 && item.inputPath.startsWith('./weeknotes/')))
 
   //eleventyConfig.addCollection("tagList", function(collection) {
     //let tagSet = new Set();
